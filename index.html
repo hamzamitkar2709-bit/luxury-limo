@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Luxury Limo | Book • Ride • Enjoy</title>
 
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ---------- BASIC COLORS ---------- */
     :root {
       --black: #050506;
       --panel: #101018;
@@ -18,18 +16,19 @@
       --rose-deep: #c98463;
       --text-main: #f8f8f8;
       --text-sub: #c4c4d0;
+      --ok: #3ddc97;
+      --danger: #ff6b6b;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: "Poppins", system-ui, sans-serif;
       background: radial-gradient(circle at top, #1c1c2b 0, #050506 50%, #020203 100%);
       color: var(--text-main);
+      font-size: 24px;
     }
 
     a { text-decoration: none; color: inherit; }
@@ -37,7 +36,7 @@
     .wrapper {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 16px 40px;
+      padding: 0 16px 52px;
     }
 
     /* ========================================
@@ -52,7 +51,7 @@
       border-bottom: 1px solid rgba(242,197,177,0.25);
       backdrop-filter: blur(10px);
       z-index: 100;
-      height: 110px;
+      height: 96px;
     }
 
     .header-inner {
@@ -62,24 +61,34 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+      height: 96px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 180px;
     }
 
     .header-logo {
-      height: 110px;
+      height: 88px;
       width: auto;
+      display: block;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,0.6));
     }
 
     nav {
       display: flex;
-      gap: 32px;
-      font-size: 15px;
+      gap: 28px;
+      font-size: 17px;
       color: var(--rose);
       font-weight: 400;
+      align-items: center;
     }
 
-    nav a {
-      position: relative;
-    }
+    nav a { position: relative; }
 
     nav a::after {
       content: "";
@@ -92,37 +101,54 @@
       transition: width 0.2s ease;
     }
 
-    nav a:hover::after {
-      width: 100%;
-    }
+    nav a:hover::after { width: 100%; }
 
     .btn-main {
-      padding: 9px 26px;
+      padding: 10px 22px;
       border-radius: 999px;
       background: linear-gradient(135deg, var(--rose), var(--rose-deep));
       color: #26120e;
-      font-size: 14px;
+      font-size: 17px;
       font-weight: 600;
       border: none;
       cursor: pointer;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .btn-main:hover {
-      filter: brightness(1.05);
+    .btn-main:hover { filter: brightness(1.05); }
+
+    .btn-ghost {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,197,177,0.35);
+      background: rgba(5,5,6,0.35);
+      color: var(--rose);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+
+    .btn-ghost:hover { background: rgba(242,197,177,0.12); }
+
+    .page-offset { height: 120px; }
 
     @media (max-width: 900px) {
       nav { display: none; }
-      .header-inner { padding-right: 8px; }
-    }
-
-    .page-offset {
-      height: 130px;
+      header { height: 86px; }
+      .header-inner { height: 86px; }
+      .header-logo { height: 78px; }
     }
 
     /* ========================================
-       HERO SLIDER
+       HERO
        ======================================== */
     .hero {
       position: relative;
@@ -130,41 +156,106 @@
       overflow: hidden;
       background: #000;
       box-shadow: 0 24px 60px rgba(0,0,0,0.9);
-      margin-bottom: 28px;
+      margin-bottom: 22px;
     }
 
     #heroImage {
       display: block;
       width: 100%;
-      height: auto;
-      border-radius: 18px;
+      height: calc(100svh - 120px);
+      height: calc(100dvh - 120px);
+      height: calc(100vh - 120px);
+      min-height: 620px;
+      max-height: 900px;
+      object-fit: cover;
       opacity: 1;
       transition: opacity 0.7s ease;
     }
 
-    #heroImage.fade-out {
-      opacity: 0;
+    #heroImage.fade-out { opacity: 0; }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(5,5,6,0.9) 0%,
+        rgba(5,5,6,0.55) 45%,
+        rgba(5,5,6,0.25) 70%,
+        rgba(5,5,6,0.08) 100%
+      );
+      pointer-events: none;
     }
 
-    /* Slider arrows */
+    .hero-content {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 16px;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(242,197,177,0.10);
+      border: 1px solid rgba(242,197,177,0.22);
+      color: var(--rose);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      pointer-events: none;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(26px, 4.2vw, 46px);
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .hero-copy p {
+      max-width: 620px;
+      color: rgba(248,248,248,0.88);
+      font-size: 17px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+
     .hero-arrow {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 999px;
       border: 1px solid rgba(242,197,177,0.7);
-      background: rgba(5,5,6,0.7);
+      background: rgba(5,5,6,0.65);
       color: var(--rose);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 22px;
       backdrop-filter: blur(6px);
       transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
     .hero-arrow.left { left: 14px; }
@@ -172,10 +263,9 @@
 
     .hero-arrow:hover {
       background: rgba(242,197,177,0.18);
-      transform: translateY(-50%) scale(1.05);
+      transform: translateY(-50%) scale(1.06);
     }
 
-    /* Slider dots */
     .hero-dots {
       position: absolute;
       bottom: 14px;
@@ -205,192 +295,484 @@
       transform: scale(1.2);
     }
 
-    @media (max-width: 600px) {
-      .hero-arrow {
-        width: 32px;
-        height: 32px;
-        font-size: 18px;
+    @media (max-width: 900px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        top: auto;
+        bottom: 56px;
+        transform: none;
       }
+      #heroImage {
+        height: calc(100svh - 96px);
+        height: calc(100dvh - 96px);
+        height: calc(100vh - 96px);
+        min-height: 520px;
+        max-height: 760px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #heroImage {
+        height: auto;
+        min-height: 0;
+        max-height: none;
+        object-fit: contain;
+        background: #000;
+      }
+
+      .hero-content {
+        position: relative;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        transform: none;
+        padding: 14px;
+        background: rgba(5,5,6,0.78);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(242,197,177,0.18);
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(5,5,6,0.10) 0%,
+          rgba(5,5,6,0.25) 40%,
+          rgba(5,5,6,0.55) 75%,
+          rgba(5,5,6,0.70) 100%
+        );
+      }
+
+      .hero-copy h1 { font-size: clamp(22px, 7vw, 30px); }
+      .hero-copy p { font-size: 13px; line-height: 1.6; }
+
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .btn-main,
+      .hero-actions .btn-ghost { width: 100%; justify-content: center; }
+
+      .hero-arrow { width: 34px; height: 34px; font-size: 24px; }
       .hero-dots { bottom: 10px; }
+    }
+
+    @media (max-width: 420px) {
+      .hero-arrow { display: none; }
     }
 
     /* ========================================
        SECTIONS
        ======================================== */
-    section {
-      margin-bottom: 26px;
+    section.block {
+      margin-bottom: 18px;
       background: var(--panel);
       border-radius: 14px;
-      padding: 24px 20px 26px;
+      padding: 22px 18px 24px;
       box-shadow: 0 16px 40px rgba(0,0,0,0.8);
       border: 1px solid rgba(255,255,255,0.03);
     }
 
-    section h2 {
-      font-size: 22px;
+    section.block h2 {
+      font-size: 20px;
       color: var(--rose);
       margin-bottom: 8px;
     }
 
-    section p.lead {
-      font-size: 14px;
+    section.block p.lead {
+      font-size: 17px;
       color: var(--text-sub);
-      max-width: 820px;
-      line-height: 1.7;
-      margin-bottom: 18px;
+      max-width: 860px;
+      line-height: 1.75;
+      margin-bottom: 14px;
     }
 
-    .about-grid {
+    .about-mini {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
     .card {
       background: var(--card);
       border-radius: 18px;
-      padding: 16px 16px 14px;
+      padding: 16px;
       border: 1px solid rgba(255,255,255,0.06);
     }
 
     .card h3 {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--rose);
       margin-bottom: 6px;
     }
 
     .card p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-sub);
       line-height: 1.7;
     }
 
+    @media (max-width: 900px) {
+      .about-mini { grid-template-columns: 1fr; }
+    }
+
+    /* ========================================
+       SERVICES (PRO + IMAGES + DOTS LIKE HERO)
+       ======================================== */
+    .service-wrap { position: relative; }
+
     .service-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 16px;
+      grid-auto-flow: column;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+      scroll-behavior: smooth;
     }
 
-    .service-card h3 {
-      font-size: 15px;
-      margin-bottom: 6px;
+    /* ✅ Hide native scrollbar (still scrolls) */
+    .service-grid{
+      scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* IE/Edge old */
+    }
+    .service-grid::-webkit-scrollbar{
+      height: 0;                    /* Chrome/Safari */
+    }
+
+    /* ✅ Premium fade edges */
+    .service-wrap::before,
+    .service-wrap::after{
+      content:"";
+      position:absolute;
+      top:0;
+      width:64px;
+      height: calc(100% - 36px); /* keep dots area clean */
+      z-index: 1;
+      pointer-events:none;
+    }
+    .service-wrap::before{
+      left:0;
+      background: linear-gradient(90deg, rgba(16,16,24,1), rgba(16,16,24,0));
+    }
+    .service-wrap::after{
+      right:0;
+      background: linear-gradient(270deg, rgba(16,16,24,1), rgba(16,16,24,0));
+    }
+
+    @media (min-width: 901px) {
+      .service-grid { grid-auto-columns: calc((100% - 28px) / 3); }
+    }
+
+    .service-grid > .card { scroll-snap-align: start; }
+
+    .service-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,197,177,0.7);
+      background: rgba(5,5,6,0.65);
       color: var(--rose);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 22px;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+      opacity: 0.92;
+      z-index: 2; /* above fade */
     }
 
-    .service-card p,
-    .service-card li {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.6;
+    .service-arrow.left { left: -6px; }
+    .service-arrow.right { right: -6px; }
+
+    .service-arrow:hover {
+      background: rgba(242,197,177,0.18);
+      transform: translateY(-50%) scale(1.06);
     }
 
-    .service-card ul {
-      margin-top: 6px;
-      list-style: none;
+    @media (max-width: 900px) {
+      .service-grid {
+        grid-auto-flow: row;
+        grid-template-columns: 1fr;
+        overflow-x: visible;
+      }
+      .service-arrow { display: none; }
+      .service-wrap::before,
+      .service-wrap::after { display: none; }
     }
 
-    .service-card li::before {
-      content: "• ";
+    /* ✅ NEW: Service Image Frame */
+    .service-media {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(242,197,177,0.16);
+      background: rgba(0,0,0,0.35);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.55);
+      margin-bottom: 12px;
+    }
+
+    .service-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      transition: transform 0.35s ease;
+      filter: contrast(1.02) saturate(1.02);
+    }
+
+    .service-card:hover .service-media img { transform: scale(1.08); }
+
+    .service-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0.10) 0%,
+        rgba(0,0,0,0.18) 45%,
+        rgba(0,0,0,0.42) 100%
+      );
+      pointer-events: none;
+    }
+
+    .service-badge {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 1;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(5,5,6,0.68);
+      border: 1px solid rgba(242,197,177,0.22);
       color: var(--rose);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
     }
 
-    /* CONTACT */
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .service-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(242,197,177,0.10);
+      border: 1px solid rgba(242,197,177,0.22);
+      flex: 0 0 auto;
+    }
+
+    .icon svg { width: 20px; height: 20px; fill: none; stroke: var(--rose); stroke-width: 2; }
+
+    .service-card h3 { font-size: 15px; color: var(--rose); }
+    .service-card p { font-size: 13px; color: var(--text-sub); line-height: 1.65; }
+
+    .service-points {
+      display: grid;
+      gap: 6px;
+      margin-top: 4px;
+      margin-bottom: 2px;
+    }
+
+    .service-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 12.5px;
+      color: rgba(248,248,248,0.82);
+      line-height: 1.55;
+    }
+
+    .service-dot-mini {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      margin-top: 7px;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      flex: 0 0 auto;
+      opacity: 0.95;
+    }
+
+    .service-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 6px;
+    }
+
+    /* ✅ NEW: Service dots (same as hero) */
+    .service-dots {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(5,5,6,0.65);
+      backdrop-filter: blur(6px);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+      border: 1px solid rgba(242,197,177,0.12);
+    }
+
+    .service-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(242,197,177,0.7);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .service-dot.active {
+      background: var(--rose);
+      border-color: var(--rose-deep);
+      transform: scale(1.2);
+    }
+
+    /* ========================================
+       CONTACT
+       ======================================== */
     .contact-row {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 16px;
-      align-items: center;
-      margin-top: 4px;
+      gap: 14px;
+      align-items: flex-start;
     }
 
     .contact-info p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-sub);
-      line-height: 1.7;
+      line-height: 1.8;
     }
+
+    .mini-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ========================================
+       FLOATING BUTTONS
+       ======================================== */
+    .float-stack {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 120;
+    }
+
+    .float-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(242,197,177,0.35);
+      background: rgba(5,5,6,0.75);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.65);
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+
+    .float-btn:hover { transform: translateY(-2px); background: rgba(242,197,177,0.12); }
+    .float-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--rose); stroke-width: 2; }
 
     /* ========================================
        FOOTER
        ======================================== */
-    footer {
-      background: #050506;
-      border-top: 1px solid rgba(242,197,177,0.25);
-      padding: 18px 16px 12px;
-      margin-top: 16px;
+    .site-footer{
+      background: rgba(0,0,0,0.55);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 26px 0 0;
+      margin-top: 18px;
     }
-
-    .footer-inner {
+    .footer-inner{
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 2fr repeat(3,1fr);
-      gap: 20px;
-      align-items: center;
+      padding: 0 16px 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
     }
-
-    .footer-logo {
-      height: 110px;
+    .footer-logo{
+      height: 82px;
       width: auto;
+      display:block;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
     }
-
-    .footer-col h4 {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--rose);
-      margin-bottom: 6px;
-    }
-
-    .footer-col ul {
-      list-style: none;
-      font-size: 12px;
-      color: var(--text-sub);
-    }
-
-    .footer-col li {
-      margin-bottom: 4px;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      font-size: 11px;
-      color: var(--text-sub);
-      margin-top: 8px;
+    .footer-cols{ display:flex; gap: 26px; flex-wrap: wrap; }
+    .footer-col{ min-width: 170px; }
+    .footer-coltitle{ font-weight: 600; margin-bottom: 10px; font-size: 13px; letter-spacing: .04em; }
+    .site-footer a{ display:block; color: var(--text-sub); margin: 8px 0; font-size: 13px; }
+    .site-footer a:hover{ color: var(--rose); }
+    .footer-muted{ color: var(--text-sub); font-size: 13px; }
+    .footer-bottom{
       border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 6px;
+      padding: 14px 16px;
+      text-align: center;
+      color: var(--text-sub);
+      font-size: 13px;
     }
 
-    @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .service-grid { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 720px){
+      .footer-logo{ height: 72px; }
+      .footer-inner{ gap: 18px; }
+      .footer-cols{ gap: 18px; }
+      .footer-col{ min-width: 150px; }
     }
 
-    @media (max-width: 600px) {
-      .footer-inner { grid-template-columns: 1fr; }
-    }
+    /* Global font size bump */
+    nav{ font-size: 20px; }
+    .btn-main{ font-size: 20px; padding: 12px 24px; }
+    .btn-ghost{ font-size: 15px; padding: 12px 20px; }
   </style>
 </head>
+
 <body>
 
   <!-- HEADER -->
   <header>
     <div class="header-inner">
-      <img src="LL LOGO.png" alt="Luxury Limo" class="header-logo" />
+      <a class="header-brand" href="#home" aria-label="Luxury Limo Home">
+        <img src="LL LOGO.png" alt="Luxury Limo" class="header-logo" />
+      </a>
 
       <nav>
         <a href="#home">Home</a>
-        <a href="#about">About Us</a>
-        <a href="#services">Service</a>
-        <a href="#contact">Contact Us</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="https://wa.me/91821021119?text=Hi%20Luxury%20Limo%2C%20I%20want%20to%20book%20a%20ride." target="_blank" rel="noopener">Book Now</a>
+        <a href="#contact">Contact</a>
       </nav>
 
-      <a
-        href="https://wa.me/91XXXXXXXXXX?text=Hi%20I%20would%20like%20to%20book%20a%20ride%20with%20Luxury%20Limo"
-        target="_blank"
-        class="btn-main"
-      >
+      <a href="https://wa.me/91821021119?text=Hi%20Luxury%20Limo%2C%20I%20want%20to%20book%20a%20ride." class="btn-main" aria-label="Book now" target="_blank" rel="noopener">
         Book Now
       </a>
     </div>
@@ -400,155 +782,274 @@
 
   <div class="wrapper">
 
-    <!-- HERO SLIDER -->
+    <!-- HERO -->
     <section id="home" class="hero">
-      <button class="hero-arrow left" id="prevSlide">&#10094;</button>
+      <button class="hero-arrow left" id="prevSlide" aria-label="Previous slide">&#10094;</button>
       <img id="heroImage" src="CAR - 1.jpg" alt="Luxury Limo hero">
-      <button class="hero-arrow right" id="nextSlide">&#10095;</button>
-      <div class="hero-dots" id="heroDots"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <div class="kicker">Premium Chauffeur Service</div>
+          <h1>Business ride at <br/>affordable prices.</h1>
+          <p>
+            Airport transfers, city rides & Mumbai Darshan — with a calm driver, clean car, and a smooth experience from start to finish.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-main" href="https://wa.me/91821021119?text=Hi%20Luxury%20Limo%2C%20I%20want%20to%20get%20a%20quote%20for%20a%20ride." target="_blank" rel="noopener">Get a Quote</a>
+            <a class="btn-ghost" href="#services">View Services</a>
+          </div>
+        </div>
+      </div>
+
+      <button class="hero-arrow right" id="nextSlide" aria-label="Next slide">&#10095;</button>
+      <div class="hero-dots" id="heroDots" aria-label="Slide navigation"></div>
     </section>
 
-    <!-- ABOUT US -->
-    <section id="about">
-      <h2>About Us</h2>
+    <!-- ABOUT -->
+    <section id="about" class="block">
+      <h2>About Luxury Limo</h2>
       <p class="lead">
-        Luxury Limo is a premium chauffeur-driven service for guests who want a calm, classy and
-        reliable ride. From airport pickups to relaxed outstation drives, we turn every trip into
-        a quiet, comfortable experience.
+        We’re a premium chauffeur-driven service built for guests who want a reliable, comfortable ride — without overpaying.
+        Clean cars, disciplined chauffeurs, and a quiet, business-class experience.
       </p>
 
-      <div class="about-grid">
+      <div class="about-mini">
         <div class="card">
-          <h3>Luxury, Made Effortless</h3>
-          <p>
-            Your chauffeur arrives on time, the car is ready, and the route is planned. You simply
-            sit back, relax and enjoy a smooth, unhurried journey — with every detail taken care of.
-          </p>
+          <h3>On-time & Reliable</h3>
+          <p>Planned routes, punctual pickups, and smooth driving — so your schedule stays stress-free.</p>
         </div>
-
         <div class="card">
-          <h3>Perfect for Every Occasion</h3>
-          <p>
-            Airport runs, business meetings, family outings or a special evening — our service keeps
-            the focus on you with one standard: discreet, premium and dependable.
-          </p>
+          <h3>Comfort-first Cabin</h3>
+          <p>Neat interiors, calm ambience, and the small touches that make rides feel premium.</p>
         </div>
       </div>
     </section>
 
-    <!-- SERVICES -->
-    <section id="services">
-      <h2>Our Service Experience</h2>
+    <!-- ✅ SERVICES (PRO + IMAGES + DOTS) -->
+    <section id="services" class="block">
+      <h2>Services</h2>
       <p class="lead">
-        A simple promise: clean cars, calm drivers and a cabin that feels like your own space.
+        Choose your ride type — tap to book instantly on WhatsApp. We’ll share the best fare and confirm your chauffeur.
       </p>
 
-      <div class="service-grid">
-        <div class="card service-card">
-          <h3>Premium Fleet</h3>
-          <p>Refined, spacious vehicles for city and highway drives.</p>
-          <ul>
-            <li>Comfortable seats & legroom</li>
-            <li>Neat, fragrance-controlled cabin</li>
-            <li>Ample space for luggage</li>
-          </ul>
+      <div class="service-wrap">
+        <button class="service-arrow left" id="prevService" aria-label="Previous service">&#10094;</button>
+
+        <div class="service-grid" id="serviceTrack">
+
+          <!-- Airport -->
+          <div class="card service-card">
+            <div class="service-media">
+              <span class="service-badge">Airport</span>
+              <img src="Airport Transfers.jpg" alt="Airport Transfers - Luxury Limo">
+            </div>
+
+            <div class="service-head">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3-1 3 1v-1.5L13 19v-5.5L21 16z" />
+                </svg>
+              </div>
+              <h3>Airport Transfers</h3>
+            </div>
+
+            <p>On-time pickup & drop with luggage comfort — smooth travel to terminal or home, stress-free.</p>
+
+            <div class="service-points">
+              <div class="service-point"><span class="service-dot-mini"></span>Timely pickup + live coordination</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Clean cabin + calm chauffeur</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Best fares for city-airport routes</div>
+            </div>
+
+            <div class="service-actions">
+              <button class="btn-main" type="button" data-service="Airport Transfer">Book Airport</button>
+              <button class="btn-ghost" type="button" data-service="Airport Transfer (Quote)">Get Fare</button>
+            </div>
+          </div>
+
+          <!-- Business -->
+          <div class="card service-card">
+            <div class="service-media">
+              <span class="service-badge">Corporate</span>
+              <img src="Business Trips.jpg" alt="Business Trips - Luxury Limo">
+            </div>
+
+            <div class="service-head">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M10 6V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v1" />
+                  <path d="M4 7h16v11a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7z" />
+                  <path d="M4 12h16" />
+                </svg>
+              </div>
+              <h3>Business Trips</h3>
+            </div>
+
+            <p>Meetings, office commute & client visits — a quiet, professional ride for your daily schedule.</p>
+
+            <div class="service-points">
+              <div class="service-point"><span class="service-dot-mini"></span>Professional chauffeur etiquette</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Comfortable, quiet cabin experience</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Flexible hourly / trip-based pricing</div>
+            </div>
+
+            <div class="service-actions">
+              <button class="btn-main" type="button" data-service="Business Trip">Book Business</button>
+              <button class="btn-ghost" type="button" data-service="Business Trip (Quote)">Get Fare</button>
+            </div>
+          </div>
+
+          <!-- Mumbai Darshan -->
+          <div class="card service-card">
+            <div class="service-media">
+              <span class="service-badge">City Tour</span>
+              <img src="Mumbai Darshan.jpg" alt="Mumbai Darshan - Luxury Limo">
+            </div>
+
+            <div class="service-head">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 21s-6-5.25-6-10a6 6 0 1 1 12 0c0 4.75-6 10-6 10z" />
+                  <path d="M12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                </svg>
+              </div>
+              <h3>Mumbai Darshan</h3>
+            </div>
+
+            <p>Gateway, Marine Drive, Bandra & more — explore Mumbai comfortably with a calm chauffeur.</p>
+
+            <div class="service-points">
+              <div class="service-point"><span class="service-dot-mini"></span>Custom route as per your time</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Stops included for photos & snacks</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Ideal for family & guests</div>
+            </div>
+
+            <div class="service-actions">
+              <button class="btn-main" type="button" data-service="Mumbai Darshan">Book Darshan</button>
+              <button class="btn-ghost" type="button" data-service="Mumbai Darshan (Quote)">Get Fare</button>
+            </div>
+          </div>
+
+          <!-- Wedding / Events -->
+          <div class="card service-card">
+            <div class="service-media">
+              <span class="service-badge">Events</span>
+              <img src="Wedding _ Events.jpg" alt="Wedding / Events - Luxury Limo">
+            </div>
+
+            <div class="service-head">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 2l2.4 5 5.6.8-4 3.9.9 5.6L12 18l-4.9 2.3.9-5.6-4-3.9 5.6-.8L12 2z" />
+                </svg>
+              </div>
+              <h3>Wedding / Events</h3>
+            </div>
+
+            <p>Arrive in style for weddings, receptions & special occasions with a premium chauffeur service.</p>
+
+            <div class="service-points">
+              <div class="service-point"><span class="service-dot-mini"></span>Premium arrival + clean presentation</div>
+              <div class="service-point"><span class="service-dot-mini"></span>On-time scheduling for functions</div>
+              <div class="service-point"><span class="service-dot-mini"></span>Best for bride/groom + family rides</div>
+            </div>
+
+            <div class="service-actions">
+              <button class="btn-main" type="button" data-service="Wedding / Events">Book Event</button>
+              <button class="btn-ghost" type="button" data-service="Wedding / Events (Quote)">Get Fare</button>
+            </div>
+          </div>
+
         </div>
 
-        <div class="card service-card">
-          <h3>Professional Chauffeurs</h3>
-          <p>Soft-spoken, trained drivers who respect your time and privacy.</p>
-          <ul>
-            <li>Neat uniform & grooming</li>
-            <li>Safe, smooth driving style</li>
-            <li>City & outstation experience</li>
-          </ul>
-        </div>
+        <button class="service-arrow right" id="nextService" aria-label="Next service">&#10095;</button>
 
-        <div class="card service-card">
-          <h3>Comfort Touches</h3>
-          <p>Small details that make a ride feel thoughtfully put together.</p>
-          <ul>
-            <li>Complimentary water & tissues</li>
-            <li>Phone charging support*</li>
-            <li>AC & music as you prefer</li>
-          </ul>
-        </div>
+        <!-- ✅ Dots like hero -->
+        <div class="service-dots" id="serviceDots" aria-label="Service navigation"></div>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact &amp; Booking</h2>
+    <section id="contact" class="block">
+      <h2>Contact Us</h2>
       <p class="lead">
-        Share your pickup point, date, time and destination — we’ll confirm your ride and assign a
-        chauffeur.
+        Prefer quick booking? Call or WhatsApp us — we’ll confirm your ride and assign a chauffeur.
       </p>
 
       <div class="contact-row">
         <div class="contact-info">
-          <p><strong>Email:</strong> hello@luxurylimo.in</p>
-          <p><strong>WhatsApp:</strong> +91 XXXXX XXXXX</p>
-          <p><strong>Service Areas:</strong> Airport • City • Outstation (Your City)</p>
+          <p><strong>Phone:</strong> <a href="tel:+91821021119">+91 821021119</a> &nbsp;•&nbsp; <a href="tel:+91821021114">+91 821021114</a></p>
+          <p><strong>WhatsApp:</strong> <a href="https://wa.me/91821021119" target="_blank" rel="noopener">+91 821021119</a></p>
+          <p><strong>Email:</strong> info@luxurylimo.co.in</p>
+          <p><strong>Service Areas:</strong> Airport • City • Mumbai Darshan • Wedding/Events</p>
         </div>
 
-        <a
-          href="https://wa.me/91XXXXXXXXXX?text=Hi%20I%20want%20to%20book%20a%20ride%20with%20Luxury%20Limo"
-          target="_blank"
-          class="btn-main"
-        >
-          Book Your Ride
-        </a>
+        <div class="mini-actions">
+          <a class="btn-main" href="tel:+91821021119">Call Now</a>
+          <a class="btn-ghost" href="https://wa.me/91821021119?text=Hi%20I%20want%20to%20book%20a%20ride%20with%20Luxury%20Limo" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
       </div>
     </section>
 
   </div>
 
-  <!-- FOOTER -->
-  <footer>
+  <!-- FLOATING QUICK CONTACT -->
+  <div class="float-stack" aria-label="Quick contact">
+    <a class="float-btn" href="tel:+91821021119" aria-label="Call">
+      <svg viewBox="0 0 24 24">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.58-1.06a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92Z" />
+      </svg>
+    </a>
+    <a class="float-btn" href="https://wa.me/91821021119?text=Hi%20I%20want%20to%20book%20a%20ride%20with%20Luxury%20Limo" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24">
+        <path d="M20.52 3.48A11.9 11.9 0 0 0 12.07 0C5.5.03.2 5.33.23 11.9c0 2.09.55 4.14 1.6 5.95L0 24l6.33-1.66a11.86 11.86 0 0 0 5.7 1.45h.05c6.57 0 11.9-5.33 11.92-11.9a11.83 11.83 0 0 0-3.48-8.41Z" />
+        <path d="M12.08 21.3h-.04a9.93 9.93 0 0 1-5.06-1.39l-.36-.21-3.76.99 1-3.66-.24-.37a9.91 9.91 0 0 1-1.53-5.26C2.11 6 6.19 1.92 12.06 1.9a9.93 9.93 0 0 1 7.07 2.93 9.88 9.88 0 0 1 2.92 7.03c-.02 5.88-4.1 9.44-9.97 9.44Z" />
+        <path d="M17.07 14.43c-.27-.14-1.62-.8-1.87-.89-.25-.09-.43-.14-.61.14-.18.27-.7.89-.86 1.07-.16.18-.31.2-.58.07-.27-.14-1.15-.42-2.2-1.34-.81-.72-1.36-1.61-1.52-1.88-.16-.27-.02-.42.12-.56.12-.12.27-.31.41-.47.14-.16.18-.27.27-.45.09-.18.05-.34-.02-.47-.07-.14-.61-1.47-.84-2.01-.22-.53-.44-.46-.61-.47h-.52c-.18 0-.47.07-.72.34-.25.27-.95.93-.95 2.27s.98 2.64 1.11 2.82c.14.18 1.93 2.95 4.68 4.13.66.28 1.17.45 1.57.58.66.21 1.26.18 1.74.11.53-.08 1.62-.66 1.85-1.3.23-.64.23-1.18.16-1.3-.07-.12-.25-.2-.52-.34Z" />
+      </svg>
+    </a>
+  </div>
+
+  <footer class="site-footer">
     <div class="footer-inner">
-      <div>
+      <div class="footer-brand">
         <img src="LL LOGO.png" alt="Luxury Limo" class="footer-logo" />
       </div>
 
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#about">About us</a></li>
-          <li><a href="#services">Our services</a></li>
-          <li>Cancellation &amp; refund</li>
-          <li>Terms &amp; conditions</li>
-          <li>FAQs</li>
-        </ul>
-      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <div class="footer-coltitle">Quick Links</div>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="https://wa.me/91821021119?text=Hi%20Luxury%20Limo%2C%20I%20want%20to%20book%20a%20ride." target="_blank" rel="noopener">Book Now</a>
+          <a href="#contact">Contact</a>
+        </div>
 
-      <div class="footer-col">
-        <h4>Services</h4>
-        <ul>
-          <li>Airport transfers</li>
-          <li>City rentals</li>
-          <li>Outstation trips</li>
-          <li>Event travel</li>
-          <li>Corporate rides</li>
-        </ul>
-      </div>
+        <div class="footer-col">
+          <div class="footer-coltitle">Contact</div>
+          <a href="tel:+91821021119">Call: +91 821021119</a>
+          <a href="https://wa.me/91821021119" target="_blank" rel="noopener">WhatsApp: +91 821021119</a>
+          <a href="mailto:info@luxurylimo.co.in">Email: info@luxurylimo.co.in</a>
+        </div>
 
-      <div class="footer-col">
-        <h4>Connect</h4>
-        <ul>
-          <li>Email: hello@luxurylimo.in</li>
-          <li>WhatsApp: +91 XXXXX XXXXX</li>
-        </ul>
+        <div class="footer-col">
+          <div class="footer-coltitle">Service Areas</div>
+          <div class="footer-muted">Mumbai • Navi Mumbai • Airport • Business • Mumbai Darshan • Events</div>
+          <div class="footer-muted" style="margin-top:10px;">24×7 Support • Verified Chauffeurs • Clean Fleet</div>
+        </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      © 2025 Luxury Limo. All rights reserved.
+      <span>© <span id="year"></span> Luxury Limo. All rights reserved.</span>
     </div>
   </footer>
 
-  <!-- SLIDER SCRIPT -->
   <script>
-    // Make sure these names match your actual files in the same folder
+    // =========================
+    // HERO SLIDER
+    // =========================
     const slides = [
       "CAR - 1.jpg",
       "CAR - 2.jpg",
@@ -564,7 +1065,7 @@
     const nextBtn = document.getElementById("nextSlide");
     const dotsContainer = document.getElementById("heroDots");
 
-    const SLIDE_INTERVAL = 5000; // 5 seconds
+    const SLIDE_INTERVAL = 5000;
     let sliderTimer = null;
     let dotElements = [];
 
@@ -572,6 +1073,7 @@
       slides.forEach((_, i) => {
         const dot = document.createElement("button");
         dot.className = "hero-dot";
+        dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
         dot.addEventListener("click", () => {
           showSlide(i);
           resetTimer();
@@ -582,9 +1084,7 @@
     }
 
     function updateDots() {
-      dotElements.forEach((dot, i) => {
-        dot.classList.toggle("active", i === currentIndex);
-      });
+      dotElements.forEach((dot, i) => dot.classList.toggle("active", i === currentIndex));
     }
 
     function showSlide(index) {
@@ -593,28 +1093,15 @@
       currentIndex = index;
 
       heroImage.classList.add("fade-out");
-
       setTimeout(() => {
         heroImage.src = slides[currentIndex];
         heroImage.classList.remove("fade-out");
         updateDots();
-      }, 350);
-    }
-
-    function nextSlide() {
-      showSlide(currentIndex + 1);
-      resetTimer();
-    }
-
-    function prevSlideClick() {
-      showSlide(currentIndex - 1);
-      resetTimer();
+      }, 320);
     }
 
     function startSlider() {
-      sliderTimer = setInterval(() => {
-        showSlide(currentIndex + 1);
-      }, SLIDE_INTERVAL);
+      sliderTimer = setInterval(() => showSlide(currentIndex + 1), SLIDE_INTERVAL);
     }
 
     function resetTimer() {
@@ -622,16 +1109,117 @@
       startSlider();
     }
 
-    // Init
     createDots();
     heroImage.src = slides[0];
     updateDots();
     startSlider();
 
-    nextBtn.addEventListener("click", nextSlide);
-    prevBtn.addEventListener("click", prevSlideClick);
-  </script>
+    nextBtn.addEventListener("click", () => { showSlide(currentIndex + 1); resetTimer(); });
+    prevBtn.addEventListener("click", () => { showSlide(currentIndex - 1); resetTimer(); });
 
+    // =========================
+    // SERVICES SCROLL
+    // =========================
+    const serviceTrack = document.getElementById('serviceTrack');
+    const prevService = document.getElementById('prevService');
+    const nextService = document.getElementById('nextService');
+
+    function scrollServices(direction) {
+      if (!serviceTrack) return;
+      const step = Math.max(280, Math.floor(serviceTrack.clientWidth / 3));
+      serviceTrack.scrollBy({ left: direction * step, behavior: 'smooth' });
+      setTimeout(updateServiceDots, 260);
+    }
+
+    if (prevService) prevService.addEventListener('click', () => scrollServices(-1));
+    if (nextService) nextService.addEventListener('click', () => scrollServices(1));
+
+    // =========================
+    // SERVICES DOTS (LIKE HERO)
+    // =========================
+    const serviceDotsContainer = document.getElementById("serviceDots");
+    let serviceDotEls = [];
+
+    function getServiceCards() {
+      return serviceTrack ? Array.from(serviceTrack.querySelectorAll(".service-card")) : [];
+    }
+
+    function createServiceDots() {
+      if (!serviceTrack || !serviceDotsContainer) return;
+
+      serviceDotsContainer.innerHTML = "";
+      serviceDotEls = [];
+
+      const cards = getServiceCards();
+      cards.forEach((_, i) => {
+        const d = document.createElement("button");
+        d.className = "service-dot";
+        d.setAttribute("aria-label", `Go to service ${i + 1}`);
+        d.addEventListener("click", () => scrollToService(i));
+        serviceDotsContainer.appendChild(d);
+        serviceDotEls.push(d);
+      });
+
+      updateServiceDots();
+    }
+
+    function updateServiceDots() {
+      if (!serviceTrack || serviceDotEls.length === 0) return;
+
+      const cards = getServiceCards();
+      if (cards.length === 0) return;
+
+      const trackRect = serviceTrack.getBoundingClientRect();
+      let bestIndex = 0;
+      let bestDistance = Infinity;
+
+      cards.forEach((card, i) => {
+        const r = card.getBoundingClientRect();
+        const dist = Math.abs(r.left - trackRect.left);
+        if (dist < bestDistance) {
+          bestDistance = dist;
+          bestIndex = i;
+        }
+      });
+
+      serviceDotEls.forEach((dot, i) => dot.classList.toggle("active", i === bestIndex));
+    }
+
+    function scrollToService(index) {
+      const cards = getServiceCards();
+      const target = cards[index];
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+      setTimeout(updateServiceDots, 260);
+    }
+
+    if (serviceTrack) {
+      serviceTrack.addEventListener("scroll", () => {
+        window.requestAnimationFrame(updateServiceDots);
+      });
+    }
+
+    createServiceDots();
+    window.addEventListener("resize", createServiceDots);
+
+    // =========================
+    // BOOK NOW -> WhatsApp
+    // =========================
+    const WA_NUMBER = "91821021119";
+
+    function openWhatsApp(message) {
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank", "noopener");
+    }
+
+    document.querySelectorAll("[data-service]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const service = btn.getAttribute("data-service") || "Ride";
+        openWhatsApp(`Hi Luxury Limo, I want to book a ${service}. Please share the fare/quote.`);
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
